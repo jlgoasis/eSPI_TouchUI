@@ -81,18 +81,18 @@ void TFT_eSPI_TouchUI::drawButton(boolean inverted) {
 
       case 2:   // Circular or Rounded Knob
 	if (_w >= _h) {
-	  _gfx->fillRoundRect(_x, _y, _w, _h, _h/2, _bgcolor);
+	 // _gfx->fillRoundRect(_x, _y, _w, _h, _h/2, _bgcolor);
 	  _gfx->fillRoundRect(_x + fl, _y + fl, _w - fl * 2, _h - fl * 2, _h/2 - fl, oncolor);
 	  _gfx->drawRoundRect(_x, _y, _w, _h, _h/2, _outlinecolor);
         }
 	if (_w < _h) {
-	  _gfx->fillRoundRect(_x, _y, _w, _h, _w/2, _bgcolor);
+	  // _gfx->fillRoundRect(_x, _y, _w, _h, _w/2, _bgcolor);
 	  _gfx->fillRoundRect(_x + fl, _y + fl, _w - fl * 2, _h - fl * 2, _w/2 - fl, oncolor);
 	  _gfx->drawRoundRect(_x, _y, _w, _h, _w/2, _outlinecolor);
 	}
 	
 /*
-  	_gfx->fillCircle(x2, y2, r, _bgcolor);
+  	// _gfx->fillCircle(x2, y2, r, _bgcolor);
     	_gfx->fillCircle(x2 , y2, r - fl, oncolor);
     	_gfx->drawCircle(x2, y2, r, _outlinecolor);
 */
@@ -101,7 +101,7 @@ void TFT_eSPI_TouchUI::drawButton(boolean inverted) {
       case 3:   // Rectangular Rounded knob with led
     	r = min(_w, _h) / 4;  // Corner radius
     	yt = _y + _h / 1.8;
-    	_gfx->fillRoundRect(_x, _y, _w, _h, r, _bgcolor);
+        _gfx->fillRoundRect(_x, _y, _w, _h, r, _bgcolor);
     	_gfx->drawRoundRect(x3 - (_w/6),     _y + fl,     _w/3,     _h/6,     r/4, _outlinecolor);  // led line
         _gfx->fillRoundRect(x3 - (_w/6) + 1, _y + fl + 1, _w/3 - 2, _h/6 - 2, r/4, ledcolor);  // led color
     	_gfx->drawRoundRect(_x, _y, _w, _h, r, _outlinecolor);
@@ -133,7 +133,7 @@ void TFT_eSPI_TouchUI::drawButton(boolean inverted) {
         break;
 
       default: // Rectangular knob.
-  	_gfx->fillRect(_x, _y, _w, _h, _bgcolor);
+  	// _gfx->fillRect(_x, _y, _w, _h, _bgcolor);
     	_gfx->fillRect(_x + fl, _y + fl, _w - fl * 2, _h - fl * 2, oncolor);
     	_gfx->drawRect(_x, _y, _w, _h, _outlinecolor);
       	break;
@@ -260,8 +260,8 @@ void TFT_eSPI_TouchUI::drawButtonS(boolean inverted) {
   uint16_t w3 = w2 / 16;
   uint16_t fl = _h / 15;
   uint16_t r = _h / 2;
-  uint16_t xt1 = _x + r;
-  uint16_t xt2 = _x + _w - r;
+  uint16_t xt1 = _x + _w / 4;
+  uint16_t xt2 = _x + _w - _w / 4;
   uint16_t yt = _y + r;
 
   if(inverted) {
@@ -276,22 +276,22 @@ void TFT_eSPI_TouchUI::drawButtonS(boolean inverted) {
   // Draw
     switch (_knobstyle) {
      case 1:   // Triangle Button
-  	_gfx->fillRect(_x+fl, _y+fl, _w/2-fl, _h-fl*2, oncolor);
-	_gfx->fillRect(w2, _y+fl, _w/2-fl, _h-fl*2, offcolor);
-	_gfx->fillTriangle (w2-w3, _y+fl, w2+w3, _y+fl, w2-w3, _y + _h-fl-1, oncolor);
-	_gfx->fillTriangle (w2+w3, _y+fl, w2+w3, _y + _h-fl-1, w2-w3, _y + _h-fl-1, offcolor);
+  	_gfx->fillRect(_x+fl, _y+fl, _w/2-fl, _h-fl*2, offcolor);
+	_gfx->fillRect(w2, _y+fl, _w/2-fl, _h-fl*2, oncolor);
+	_gfx->fillTriangle (w2-w3, _y+fl, w2+w3, _y+fl, w2-w3, _y + _h-fl-1, offcolor);
+	_gfx->fillTriangle (w2+w3, _y+fl, w2+w3, _y + _h-fl-1, w2-w3, _y + _h-fl-1, oncolor);
   	_gfx->drawRect(_x, _y, _w, _h, _outlinecolor);
       	break;
 
      case 2:   // Rounded button
   	_gfx->fillRoundRect(_x, _y, _w, _h, r, _outlinecolor);
-  	_gfx->fillCircle(xt1 , yt, r - fl, oncolor);
-  	_gfx->fillCircle(xt2 , yt, r - fl, offcolor);
+  	_gfx->fillCircle(_x + r + fl , yt, r - fl, offcolor);
+  	_gfx->fillCircle(_x + _w - r - fl , yt, r - fl, oncolor);
       	break;
 
       default: // Rectangular button
-  	_gfx->fillRect(_x+fl, _y+fl, _w / 2-fl, _h-fl*2, oncolor);
-  	_gfx->fillRect(w2, _y+fl, _w / 2-fl, _h-fl*2, offcolor);
+  	_gfx->fillRect(_x+fl, _y+fl, _w / 2-fl, _h-fl*2, offcolor);
+  	_gfx->fillRect(w2, _y+fl, _w / 2-fl, _h-fl*2, oncolor);
   	_gfx->drawRect(_x, _y, _w, _h, _outlinecolor);
       	break;
     }
@@ -300,18 +300,18 @@ void TFT_eSPI_TouchUI::drawButtonS(boolean inverted) {
   if (_labelOn) {
   	uint8_t tempdatum = _gfx->getTextDatum();
   	_gfx->setTextDatum(MC_DATUM);
-  	_gfx->setTextColor(_oncolor);
-  	_gfx->drawString("ON", xt1, yt);
   	_gfx->setTextColor(_offcolor);
-  	_gfx->drawString("OFF", xt2, yt);
+  	_gfx->drawString("OFF", xt1, yt);
+  	_gfx->setTextColor(_oncolor);
+  	_gfx->drawString("ON", xt2, yt);
   	_gfx->setTextDatum(tempdatum);
  }
 
 }
 
-boolean TFT_eSPI_TouchUI::justPressedOn(int16_t x) { return (currstate && !laststate && x < _x + _w/2);  }
+boolean TFT_eSPI_TouchUI::justPressedOn(int16_t x) { return (currstate && !laststate && x > _x + _w/2);  }
 
-boolean TFT_eSPI_TouchUI::justPressedOff(int16_t x) { return (currstate && !laststate && x > _x + _w/2);  }
+boolean TFT_eSPI_TouchUI::justPressedOff(int16_t x) { return (currstate && !laststate && x < _x + _w/2);  }
 
 
 
@@ -359,7 +359,7 @@ void TFT_eSPI_TouchUI::initSliderH(
   _fillcolor    = fill;
   _nofillcolor  = nofill;
 
-  _bgcolor      = _gfx->readPixel(x,y); // Get de background color
+  _bgcolor      = _gfx->readPixel(_x, _y); // Get de background color
 
   _knobstyle    = knob;
   _drawvalue    = dv;
@@ -376,7 +376,7 @@ void TFT_eSPI_TouchUI::drawSliderH(int16_t value) {
     int16_t y2 = _y + (_w / 2);   // Y Mid Point
     uint8_t g = _w;               // Gap width
     uint8_t r = _w / 2;           // Knob circular radio
-    uint8_t h = 0;               // Knob rectangular height, also determinate text position
+    uint8_t h = 0;                // Knob rectangular height, also determinate text position
 
     // Clear old position except knob 0
     if (_knobstyle != 0) {
