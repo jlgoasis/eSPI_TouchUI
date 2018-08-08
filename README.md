@@ -6,5 +6,7 @@ Not finished, testing now
 TODO:
 
 backgroud color is showen alway in black
+
 Graphich Button doesn't work
+
 Add more examples
