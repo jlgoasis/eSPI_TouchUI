@@ -67,12 +67,11 @@ void setup(void) {
 
   for (uint8_t i = 0; i < 5; i++) {
     // Init parameters:
-    // &tft, min value, max value, x, y , w , l,outline color, fill color, no fill color, knob type, show value (-1 or < 0: No show value, 0: Automatic position, > 0: fix position) .
-    slider[i].initSliderH(&tft, 0, 100, 70, 36 + i * 44, 30, 220, outlineColor[i], fillColor[i], nofillColor[i], i, pos[i]);
+    // &tft, min value, max value, x, y , w , l,outline color, fill color, nofill color, background color, knob type, show value (-1 or < 0: No show value, 0: Automatic position, > 0: fix position) .
+    slider[i].initSliderH(&tft, 0, 100, 70, 36 + i * 44, 30, 220, outlineColor[i], fillColor[i], nofillColor[i], TFT_BLACK, i, pos[i]);
     slider[i].drawSliderH(0);
-    slider[i + 5].initSliderV(&tft, 0, 100, 20 + i * 60, 280, 30, 140, outlineColor[i], fillColor[i], nofillColor[i], i, pos[i]);
+    slider[i + 5].initSliderV(&tft, 0, 100, 20 + i * 60, 280, 30, 140, outlineColor[i], fillColor[i], nofillColor[i], TFT_BLACK, i, pos[i]);
     slider[i + 5].drawSliderV(0);
-
   }
 }
 
